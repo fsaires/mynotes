@@ -1,4 +1,4 @@
-###### My Notes
+# My Notes [![Build Status](https://travis-ci.org/fsaires/mynotes.svg?branch=master)](https://travis-ci.org/fsaires/mynotes)
 
 > Just a repo with my remember notes. A simple notebook :notebook:.
 
