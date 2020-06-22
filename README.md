@@ -1,4 +1,4 @@
-# My Notes [![Build Status](https://travis-ci.org/fsaires/mynotes.svg?branch=master)](https://travis-ci.org/fsaires/mynotes)
+# My Notes
 
 > Just a repo with my remember notes. A simple notebook :notebook:.
 
@@ -26,4 +26,4 @@
 
 - [Wordpress](https://github.com/fsaires/mynotes/blob/master/wordpress/wordpress.md/)
 
-[GPL 3.0](LICENSE) @ [Fernando Aires](http://fernandoaires.eti.br)
+> [GPL 3.0](LICENSE) @ [Fernando Aires](http://fernandoaires.eti.br)
