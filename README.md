@@ -1,4 +1,6 @@
-###### Just a repo with my remember notes. A simple notebook :notebook:.
+###### My Notes
+
+> Just a repo with my remember notes. A simple notebook :notebook:.
 
 - [Composer](https://github.com/fsaires/mynotes/blob/master/composer/composer.md/)
 
@@ -23,3 +25,5 @@
 - [Sonarqube](https://github.com/fsaires/mynotes/blob/master/sonarqube/sonarqube.md/)
 
 - [Wordpress](https://github.com/fsaires/mynotes/blob/master/wordpress/wordpress.md/)
+
+[GPL 3.0](LICENSE) @ [Fernando Aires](http://fernandoaires.eti.br)
