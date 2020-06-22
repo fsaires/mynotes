@@ -18,7 +18,7 @@
 
 - [Postgres](https://github.com/fsaires/mynotes/blob/master/postgres/postgres.md/)
 
-- [Shared Hosting](https://github.com/fsaires/mynotes/blob/master/jenkis/jenkis.md/)
+- [Shared Hosting](https://github.com/fsaires/mynotes/blob/master/shared_hosting/shared_hosting.md/)
 
 - [Sonarqube](https://github.com/fsaires/mynotes/blob/master/sonarqube/sonarqube.md/)
 
