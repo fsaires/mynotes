@@ -156,3 +156,11 @@ $ docker-compose restart
 ```
 $ docker-compose ps
 ```
+
+- Copiar arquivos para o Docker
+
+```
+$ docker cp file.bak container:/var/www/html
+
+```
+
