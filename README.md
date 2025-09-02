@@ -8,8 +8,6 @@
 
 - [GIT](https://github.com/fsaires/mynotes/blob/master/git/git.md/)
 
-- [Jenkis](https://github.com/fsaires/mynotes/blob/master/jenkis/jenkis.md/)
-
 - [Kubernetes](https://github.com/fsaires/mynotes/blob/master/kubernetes/kubernetes.md/)
 
 - [Laravel](https://github.com/fsaires/mynotes/blob/master/laravel/laravel.md/)
