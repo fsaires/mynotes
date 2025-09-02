@@ -1,166 +1,149 @@
-## DOCKER
+# 🐳 Guia de Comandos Docker: Do Básico ao Avançado! 🚀
 
-- Exibir todos os containers, independentemente de estarem em execução ou não: 
+Olá, marinheiro de primeira viagem (ou capitão experiente)! Navegar no oceano do Docker pode ser desafiador, mas com os comandos certos, você se tornará um mestre dos containers.
 
-```
-$ docker ps -a
-```
+Este guia foi atualizado para ser mais didático e visual, te ajudando a encontrar o que precisa rapidamente. Vamos zarpar!
 
-- Download de uma imagem: 
+---
 
-```
-$ docker pull <NOME_DA_IMAGEM>
-```
+### 🚢 Gerenciando Containers (O Coração do Docker)
+Aqui estão os comandos para interagir com seus containers no dia a dia.
 
-- Informações container: 
+| Comando | O que faz? | Exemplo de Uso |
+| :--- | :--- | :--- |
+| **`docker ps`** | **Listar containers ativos:** Mostra apenas os containers que estão em execução no momento. | `docker ps` |
+| **`docker ps -a`** | **Listar TODOS os containers:** Exibe todos os containers, incluindo os que estão parados. Super útil para limpeza! | `docker ps -a` |
+| **`docker start`** | **Iniciar um container:** "Acorda" um container que estava parado. | `docker start <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker stop`** | **Parar um container:** Envia um sinal para parar a execução de um container de forma segura. | `docker stop <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker stop $(docker ps -q)`** | **Parar TODOS os containers:** Um comando poderoso para parar todos os containers em execução de uma só vez. | `docker stop $(docker ps -q)` |
+| **`docker rm`** | **Remover um container:** Apaga um container que **não está em execução**. Para forçar a remoção de um em execução, use a flag `-f`. | `docker rm <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker inspect`** | **Inspecionar um container:** Fornece um mar de informações detalhadas sobre o container em formato JSON (redes, volumes, etc). | `docker inspect <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker exec -it`** | **Entrar em um container:** A forma **mais recomendada** de abrir um terminal interativo (`-it`) dentro de um container que já está rodando. | `docker exec -it <ID_OU_NOME> /bin/bash` |
+| **`docker attach`** | **Anexar a um container:** Conecta seu terminal ao processo principal do container. **Cuidado:** se você sair com `Ctrl+C`, o container pode parar! | `docker attach <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker port`** | **Verificar portas mapeadas:** Mostra como as portas do container estão mapeadas para as portas da sua máquina. | `docker port <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker cp`** | **Copiar arquivos:** Copia arquivos e pastas entre sua máquina e o container (nos dois sentidos!). | `docker cp arquivo.txt meu_container:/app/` |
 
-```
-$ docker inspect <ID_CONTAINER>
-```
+---
 
-- Subir um container: 
+### 🖼️ Gerenciando Imagens (Os Moldes dos Seus Containers)
+Imagens são os blueprints. Veja como gerenciá-las.
 
-```
-$ docker start <ID_CONTAINER>
-```
+| Comando | O que faz? | Exemplo de Uso |
+| :--- | :--- | :--- |
+| **`docker pull`** | **Baixar uma imagem:** Faz o download de uma imagem do Docker Hub (ou outro registro). | `docker pull ubuntu:latest` |
+| **`docker images`** | **Listar imagens locais:** Mostra todas as imagens que você já baixou para a sua máquina. | `docker images` |
+| **`docker build -t`** | **Construir uma imagem:** Cria uma nova imagem a partir de um `Dockerfile`. O `-t` define o nome e a tag (`<nome>:<versao>`). | `docker build -t minha-app:1.0 .` |
+| **`docker tag`** | **Criar tag para uma imagem:** Aplica um novo "rótulo" a uma imagem existente. Essencial para versionar e enviar ao registro. | `docker tag <ID_DA_IMAGEM> meu-usuario/minha-app:1.0` |
+| **`docker push`** | **Enviar imagem para o Hub:** Publica sua imagem em um registro como o Docker Hub para compartilhar com o mundo. | `docker push meu-usuario/minha-app:1.0` |
+| **`docker rmi`** | **Remover uma imagem:** Apaga uma imagem da sua máquina. A imagem não pode estar sendo usada por nenhum container. | `docker rmi <ID_DA_IMAGEM>` |
+| **`docker commit`** | **Criar imagem de um container:** Salva o estado atual de um container como uma nova imagem. Útil para debug, mas o ideal é sempre usar um Dockerfile. | `docker commit <ID_DO_CONTAINER> nova-imagem:debug` |
+| **`docker save`** | **Salvar imagem em um arquivo:** Exporta sua imagem para um arquivo `.tar`, facilitando o backup ou a transferência manual. | `docker save minha-app:1.0 > minha-app.tar` |
+| **`docker load`** | **Carregar imagem de um arquivo:** Importa uma imagem a partir de um arquivo `.tar`. | `docker load < minha-app.tar` |
 
-- Parar um container: 
+---
 
-```
-$ docker stop <ID_CONTAINER>
-```
+### 🎼 Docker Compose (Orquestrando Múltiplos Containers)
+Para projetos com vários serviços (ex: app + banco de dados), o `docker-compose` é seu melhor amigo.
 
-- Parar todos containers ativos: 
+| Comando | O que faz? |
+| :--- | :--- |
+| **`docker-compose up`** | **Iniciar os serviços:** Sobe todos os serviços definidos no seu `docker-compose.yml`. Use `-d` para rodar em background (modo *detached*). |
+| **`docker-compose down`** | **Parar os serviços:** Para e remove os containers, redes e (opcionalmente) volumes criados pelo `up`. |
+| **`docker-compose restart`**| **Reiniciar os serviços:** Reinicia todos os serviços do seu projeto. |
+| **`docker-compose ps`** | **Listar serviços:** Mostra o status dos containers gerenciados pelo Compose. |
 
-```
-$ docker stop $(docker ps -q)
-```
+---
 
-- Entrar no Container: 
+### 🌐 Redes & Conexões
+Containers precisam se comunicar!
 
-```
-$ docker attach <ID_CONTAINER>
-```
+| Comando | O que faz? | Exemplo de Uso |
+| :--- | :--- | :--- |
+| **`docker network create`** | **Criar uma rede:** Cria uma rede virtual para que seus containers possam se comunicar pelo nome, de forma isolada. | `docker network create --driver bridge minha-rede` |
+| **`docker network ls`** | **Listar redes:** Exibe todas as redes Docker disponíveis. | `docker network ls` |
+| **`hostname -i`** | **Ver o IP do container:** **Dentro do container**, este comando Linux mostra o IP interno dele na rede Docker. | `hostname -i` |
 
-- Remover container:  
+---
 
-```
-$ docker rm <ID_CONTAINER>
-```
+### ✨ Dicas de Ouro e Limpeza
+Mantenha seu ambiente Docker limpo e organizado!
 
-- Remover imagem: 
+| Comando | O que faz? |
+| :--- | :--- |
+| **`docker system prune -a`** | **Faxina Geral!** **CUIDADO!** Remove todos os containers parados, redes não utilizadas, o cache de build e **todas** as imagens que não estão em uso. |
+| **`docker container prune`** | **Limpar containers inativos:** Remove apenas os containers que estão parados. Uma forma mais segura de limpar o básico. |
+| **`docker ps -q`** | **Listar apenas os IDs:** Retorna somente o ID dos containers ativos. Perfeito para usar em scripts, como no comando `docker stop $(docker ps -q)`. |# 🐳 Guia de Comandos Docker: Do Básico ao Avançado! 🚀
 
-```
-$ docker rmi <ID_DA_IMAGEM> <NOME_DA_IMAGEM>
-```
+Olá, marinheiro de primeira viagem (ou capitão experiente)! Navegar no oceano do Docker pode ser desafiador, mas com os comandos certos, você se tornará um mestre dos containers.
 
-- Commit imagem
+Este guia foi atualizado para ser mais didático e visual, te ajudando a encontrar o que precisa rapidamente. Vamos zarpar!
 
-```
-$ docker commit <NOME_DO_CONTAINER> <NOME_DA_IMAGEM>
-```
+---
 
-- Gerar uma nova imagem 
+### 🚢 Gerenciando Containers (O Coração do Docker)
+Aqui estão os comandos para interagir com seus containers no dia a dia.
 
-```
-docker build -t <NOME_DA_IMAGEM> .
-```
+| Comando | O que faz? | Exemplo de Uso |
+| :--- | :--- | :--- |
+| **`docker ps`** | **Listar containers ativos:** Mostra apenas os containers que estão em execução no momento. | `docker ps` |
+| **`docker ps -a`** | **Listar TODOS os containers:** Exibe todos os containers, incluindo os que estão parados. Super útil para limpeza! | `docker ps -a` |
+| **`docker start`** | **Iniciar um container:** "Acorda" um container que estava parado. | `docker start <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker stop`** | **Parar um container:** Envia um sinal para parar a execução de um container de forma segura. | `docker stop <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker stop $(docker ps -q)`** | **Parar TODOS os containers:** Um comando poderoso para parar todos os containers em execução de uma só vez. | `docker stop $(docker ps -q)` |
+| **`docker rm`** | **Remover um container:** Apaga um container que **não está em execução**. Para forçar a remoção de um em execução, use a flag `-f`. | `docker rm <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker inspect`** | **Inspecionar um container:** Fornece um mar de informações detalhadas sobre o container em formato JSON (redes, volumes, etc). | `docker inspect <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker exec -it`** | **Entrar em um container:** A forma **mais recomendada** de abrir um terminal interativo (`-it`) dentro de um container que já está rodando. | `docker exec -it <ID_OU_NOME> /bin/bash` |
+| **`docker attach`** | **Anexar a um container:** Conecta seu terminal ao processo principal do container. **Cuidado:** se você sair com `Ctrl+C`, o container pode parar! | `docker attach <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker port`** | **Verificar portas mapeadas:** Mostra como as portas do container estão mapeadas para as portas da sua máquina. | `docker port <ID_OU_NOME_DO_CONTAINER>` |
+| **`docker cp`** | **Copiar arquivos:** Copia arquivos e pastas entre sua máquina e o container (nos dois sentidos!). | `docker cp arquivo.txt meu_container:/app/` |
 
-- Enviar imagem Docker Hub
+---
 
-```
-$ docker push <NOME_DA_IMAGEM>
-```
+### 🖼️ Gerenciando Imagens (Os Moldes dos Seus Containers)
+Imagens são os blueprints. Veja como gerenciá-las.
 
-- Exportar uma imagem para TAR
+| Comando | O que faz? | Exemplo de Uso |
+| :--- | :--- | :--- |
+| **`docker pull`** | **Baixar uma imagem:** Faz o download de uma imagem do Docker Hub (ou outro registro). | `docker pull ubuntu:latest` |
+| **`docker images`** | **Listar imagens locais:** Mostra todas as imagens que você já baixou para a sua máquina. | `docker images` |
+| **`docker build -t`** | **Construir uma imagem:** Cria uma nova imagem a partir de um `Dockerfile`. O `-t` define o nome e a tag (`<nome>:<versao>`). | `docker build -t minha-app:1.0 .` |
+| **`docker tag`** | **Criar tag para uma imagem:** Aplica um novo "rótulo" a uma imagem existente. Essencial para versionar e enviar ao registro. | `docker tag <ID_DA_IMAGEM> meu-usuario/minha-app:1.0` |
+| **`docker push`** | **Enviar imagem para o Hub:** Publica sua imagem em um registro como o Docker Hub para compartilhar com o mundo. | `docker push meu-usuario/minha-app:1.0` |
+| **`docker rmi`** | **Remover uma imagem:** Apaga uma imagem da sua máquina. A imagem não pode estar sendo usada por nenhum container. | `docker rmi <ID_DA_IMAGEM>` |
+| **`docker commit`** | **Criar imagem de um container:** Salva o estado atual de um container como uma nova imagem. Útil para debug, mas o ideal é sempre usar um Dockerfile. | `docker commit <ID_DO_CONTAINER> nova-imagem:debug` |
+| **`docker save`** | **Salvar imagem em um arquivo:** Exporta sua imagem para um arquivo `.tar`, facilitando o backup ou a transferência manual. | `docker save minha-app:1.0 > minha-app.tar` |
+| **`docker load`** | **Carregar imagem de um arquivo:** Importa uma imagem a partir de um arquivo `.tar`. | `docker load < minha-app.tar` |
 
-```
-$ docker save fsaires/myserverphp7.1 > e:\myserverphp7.1.tar
-```
+---
 
-- Importar imagem em arquivo TAR
+### 🎼 Docker Compose (Orquestrando Múltiplos Containers)
+Para projetos com vários serviços (ex: app + banco de dados), o `docker-compose` é seu melhor amigo.
 
-```
-$ docker load < e:\myserverphp7.1.tar
-```
+| Comando | O que faz? |
+| :--- | :--- |
+| **`docker-compose up`** | **Iniciar os serviços:** Sobe todos os serviços definidos no seu `docker-compose.yml`. Use `-d` para rodar em background (modo *detached*). |
+| **`docker-compose down`** | **Parar os serviços:** Para e remove os containers, redes e (opcionalmente) volumes criados pelo `up`. |
+| **`docker-compose restart`**| **Reiniciar os serviços:** Reinicia todos os serviços do seu projeto. |
+| **`docker-compose ps`** | **Listar serviços:** Mostra o status dos containers gerenciados pelo Compose. |
 
-- Versionamento Imagem (TAG)
+---
 
-```
-$ docker tag 18d86a2f57ba fsaires/myserverphp7.1:1.0
-```
+### 🌐 Redes & Conexões
+Containers precisam se comunicar!
 
-- Remover imagens, container e cache
+| Comando | O que faz? | Exemplo de Uso |
+| :--- | :--- | :--- |
+| **`docker network create`** | **Criar uma rede:** Cria uma rede virtual para que seus containers possam se comunicar pelo nome, de forma isolada. | `docker network create --driver bridge minha-rede` |
+| **`docker network ls`** | **Listar redes:** Exibe todas as redes Docker disponíveis. | `docker network ls` |
+| **`hostname -i`** | **Ver o IP do container:** **Dentro do container**, este comando Linux mostra o IP interno dele na rede Docker. | `hostname -i` |
 
-```
-$ docker system prune -a
-```
+---
 
-- Remover todos os comandos inativos
+### ✨ Dicas de Ouro e Limpeza
+Mantenha seu ambiente Docker limpo e organizado!
 
-```
-$ docker container prune
-```
-
-- Verificar as portas do Container
-
-```
-$ docker port <ID_CONTAINER>
-```
-
-- Retornar o ID dos Containers ativos
-
-```
-$ docker ps -q
-```
-
-- Criando uma rede 
-
-```
-$ docker network create --driver bridge <NOME_DA_REDE>
-```
-
-- Listar redes 
-
-```
-$ docker network ls
-```
-
-- Verificar o IP do Container (Dentro do Container):
-
-```
-$ hostname -i
-```
-
-- Iniciar serviços criados
-
-```
-$ docker-compose up
-$ docker-compose up -d
-```
-
-- Parar serviços criados
-
-```
-$ docker-compose down
-```
-
-- Reiniciar serviços criados
-
-```
-$ docker-compose restart
-```
-
-- Listar serviços em execução
-
-```
-$ docker-compose ps
-```
-
-- Copiar arquivos para o Docker
-
-```
-$ docker cp file.bak container:/var/www/html
-
-```
-
+| Comando | O que faz? |
+| :--- | :--- |
+| **`docker system prune -a`** | **Faxina Geral!** **CUIDADO!** Remove todos os containers parados, redes não utilizadas, o cache de build e **todas** as imagens que não estão em uso. |
+| **`docker container prune`** | **Limpar containers inativos:** Remove apenas os containers que estão parados. Uma forma mais segura de limpar o básico. |
+| **`docker ps -q`** | **Listar apenas os IDs:** Retorna somente o ID dos containers ativos. Perfeito para usar em scripts, como no comando `docker stop $(docker ps -q)`. |
